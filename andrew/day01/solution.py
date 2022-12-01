@@ -1,5 +1,4 @@
 import time
-import math
 
 
 def calculate_max():
