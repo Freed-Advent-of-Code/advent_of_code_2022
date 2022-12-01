@@ -5,11 +5,11 @@ class TotalCaloriesIsThatElfCarrying:
         self.max_elf_number = 1
         self.file_path = file_path
     
-    def read_file(self):    
+    def read_file(self) -> list[str]:    
         with open(self.file_path, 'r') as f:
             return f.read().split('\n')
 
-    def generate_total_calories_and_elf_number(self):
+    def generate_total_calories_and_elf_number(self) -> str:
         for i in self.read_file():
             if i == '':
                 self.max_elf_total_calories = max(self.one_elf_total_calories, self.max_elf_total_calories)
