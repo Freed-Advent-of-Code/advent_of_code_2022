@@ -1,3 +1,4 @@
-export function resolve() {
-  return 'hello world!';
+export function resolve(input) {
+  console.log(input);
+  return mostCalorie;
 }
