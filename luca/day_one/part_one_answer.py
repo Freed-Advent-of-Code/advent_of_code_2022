@@ -1,10 +1,10 @@
 class TotalCaloriesIsThatElfCarrying:
-    def __init__(self, file_path) -> None:
+    def __init__(self, file_path: str) -> None:
         self.one_elf_total_calories = 0
         self.max_elf_total_calories = 0
         self.max_elf_number = 1
         self.file_path = file_path
-
+    
     def read_file(self):    
         with open(self.file_path, 'r') as f:
             return f.read().split('\n')
@@ -20,6 +20,7 @@ class TotalCaloriesIsThatElfCarrying:
 
         return f'Max Caloires is {self.max_elf_total_calories}, Elf Number is {self.max_elf_number}'
 
+
 if __name__ == '__main__':
-    answer = TotalCaloriesIsThatElfCarrying('luca/day_one/input.txt')
+    answer = TotalCaloriesIsThatElfCarrying(file_path='luca/day_one/input.txt')
     print(answer.generate_total_calories_and_elf_number())
