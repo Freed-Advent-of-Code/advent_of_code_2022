@@ -10,8 +10,10 @@ async function main(argv) {
     const inputFile = fs.readFileSync(path.resolve('src', moduleName, 'input'));
     const input = inputFile.toString();
 
+    const startTime = new Date();
     const result = module.resolve(input);
-    console.log(result);
+    console.log('Puzzle answer is', result);
+    console.log('It takes', `${new Date() - startTime}ms`);
   } catch (e) {
     console.error(e);
   }
