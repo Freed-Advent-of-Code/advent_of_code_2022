@@ -4,12 +4,12 @@ from typing import TextIO
 def generate_total_calories(text: TextIO) -> list[int]:
     elf_total_calories_list = []
     one_elf_total_calories = 0
-    for line in text.readlines():
-        if line[:-1] == '':
+    for line in text.read().split('\n'):
+        if line == '':
             elf_total_calories_list.append(one_elf_total_calories)
             one_elf_total_calories = 0
         else:
-            one_elf_total_calories += int(line[:-1])
+            one_elf_total_calories += int(line)
 
     elf_total_calories_list.sort(reverse=True)        
     return elf_total_calories_list
