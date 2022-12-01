@@ -7,7 +7,7 @@ function resolvePuzzle1(input) {
     ...input
       .split('\n\n')
       .map((elf) =>
-        elf.split('\n').reduce((total, curr) => total + Number(curr) || 0, 0),
+        elf.split('\n').reduce((total, curr) => total + Number(curr), 0),
       ),
   );
 }
@@ -16,7 +16,7 @@ function resolvePuzzle2(input) {
   return input
     .split('\n\n')
     .map((elf) =>
-      elf.split('\n').reduce((total, curr) => total + Number(curr) || 0, 0),
+      elf.split('\n').reduce((total, curr) => total + Number(curr), 0),
     )
     .sort((a, b) => b - a)
     .slice(0, 3)
