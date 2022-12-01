@@ -1,5 +1,4 @@
 use crate::helper;
-use std::collections::BinaryHeap;
 
 pub async fn solve() {
     let input = helper::get_input(1).await;
@@ -20,17 +19,9 @@ pub async fn solve() {
         .unwrap();
     println!("part 1: {}", part1);
 
-    let mut heap: BinaryHeap<i32> = data.iter().map(|x| x.iter().sum::<i32>()).collect();
+    let mut sums: Vec<i32> = data.iter().map(|x| x.iter().sum::<i32>()).collect();
+    sums.sort_unstable_by(|a, b| b.cmp(a));
 
-    let part2: i32 = get_max_n(&mut heap, 3).iter().sum();
-
+    let part2 = sums[0] + sums[1] + sums[2];
     println!("part 2: {}", part2);
-}
-
-fn get_max_n(heap: &mut BinaryHeap<i32>, n: i32) -> Vec<i32> {
-    let mut top3 = Vec::new();
-    for _ in 0..n {
-        top3.push(heap.pop().unwrap());
-    }
-    top3
 }
