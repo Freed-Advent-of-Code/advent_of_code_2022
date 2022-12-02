@@ -581,6 +581,16 @@ Cargo.lock
 
 # MSVC Windows builds of rustc generate these, which store debugging information
 
+
+### Dart ###
+# Files and directories created by pub.
+.dart_tool/
+.packages
+
+# Conventional directory for build output.
+build/
+
+
 ### Swift ###
 # Xcode
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
