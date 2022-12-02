@@ -1,8 +1,8 @@
 mod helper;
-mod day01;
+mod day02;
 
 #[tokio::main]
 async fn main() {
     dotenv::dotenv().ok();
-    day01::solve().await;
+    day02::solve().await;
 }
