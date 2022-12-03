@@ -1,6 +1,8 @@
 mod day_one;
 mod day_two;
 
+use day_two::rock_paper_scissors;
+
 fn main() {
-    day_one::elves_calories::elves_calories();
+    rock_paper_scissors();
 }
