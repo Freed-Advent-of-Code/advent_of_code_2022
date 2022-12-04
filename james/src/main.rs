@@ -1,15 +1,13 @@
-extern crate core;
+mod day_three;
 
-mod day_two;
-
-use day_two::rock_paper_scissors;
-use day_two::rps_part2;
+use day_three::compartment_part_one;
+use crate::day_three::compartment_part_two;
 
 fn main() {
-    let r = rock_paper_scissors();
-    println!("{}", r);
 
-    let r2 = rps_part2();
-    println!("{}", r2);
+    let pt1 = compartment_part_one();
+    println!("{}", pt1);
+    let pt2 = compartment_part_two();
+    println!("{}", pt2);
 
 }
