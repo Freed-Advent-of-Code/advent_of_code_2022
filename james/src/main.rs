@@ -4,6 +4,7 @@ use day_three::compartment_part_one;
 
 fn main() {
 
-    compartment_part_one();
+    let pt1 = compartment_part_one();
+    println!("{}", pt1);
 
 }
