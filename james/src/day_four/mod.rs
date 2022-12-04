@@ -12,16 +12,15 @@ pub fn pairs_part_one() {
         .map(|pairs| {
             pairs
                 .split(",")
-                .into_iter()
                 .map(|pair| {
                     pair
                         .split("-")
-                        .into_iter()
                         .map(|x| x.parse::<i32>().unwrap())
                         .collect::<Vec<_>>()
                 })
                 .flatten()
-                .collect::<Vec<i32>>()
+                .map(|p| p[0])
+                .collect::<Vec<_>>()
         })
         .collect::<Vec<_>>();
 
