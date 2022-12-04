@@ -1,3 +1,5 @@
+extern crate core;
+
 mod day_four;
 
 use day_four::pairs_part_one;
