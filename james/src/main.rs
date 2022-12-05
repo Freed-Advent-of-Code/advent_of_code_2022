@@ -1,13 +1,11 @@
-mod day_three;
+extern crate core;
 
-use day_three::compartment_part_one;
-use crate::day_three::compartment_part_two;
+mod day_four;
+
+use day_four::pairs_part_one;
 
 fn main() {
 
-    let pt1 = compartment_part_one();
-    println!("{}", pt1);
-    let pt2 = compartment_part_two();
-    println!("{}", pt2);
+    pairs_part_one();
 
 }

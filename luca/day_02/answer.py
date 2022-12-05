@@ -26,7 +26,7 @@ if __name__ == '__main__':
         'point': {'X': 0, 'Y': 3, 'Z': 6},
         'combinations': [['B X', 'A Y', 'C Z'], ['C X', 'B Y', 'A Z'], ['A X', 'C Y', 'B Z']]
     }
-    with open('luca/day_two/input.txt') as f:
+    with open('luca/day_02/input.txt') as f:
         print(generate_total_score(text=f, **part_one_data))
         f.seek(0)
         print(generate_total_score(text=f, **part_two_data))
