@@ -60,9 +60,8 @@ fn process_input(
 }
 
 fn get_part_1(stacks: &mut Vec<Vec<char>>, instructions: &Vec<Instruction>) -> String {
-    instructions
-        .iter()
-        .for_each(|instruction| match instruction {
+    for instruction in instructions {
+        match instruction {
             Instruction {
                 from_stack,
                 to_stack,
@@ -73,7 +72,9 @@ fn get_part_1(stacks: &mut Vec<Vec<char>>, instructions: &Vec<Instruction>) -> S
                     stacks[to_stack - 1].push(item);
                 }
             }
-        });
+        }
+    }
+
     stacks
         .iter()
         .filter(|stack| stack.len() > 0)
