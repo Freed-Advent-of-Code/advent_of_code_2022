@@ -1,6 +1,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python,rust,go,java,node,visualstudio,pycharm+all,intellij+all,webstorm+all,c++,c,swift
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,rust,go,java,node,visualstudio,pycharm+all,intellij+all,webstorm+all,c++,c,swift
 
+
 ### C ###
 # Prerequisites
 *.d
@@ -96,12 +97,15 @@ go.work
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
+.idea
+
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+
 
 # AWS User-specific
 .idea/**/aws.xml
@@ -576,6 +580,16 @@ Cargo.lock
 **/*.rs.bk
 
 # MSVC Windows builds of rustc generate these, which store debugging information
+
+
+### Dart ###
+# Files and directories created by pub.
+.dart_tool/
+.packages
+
+# Conventional directory for build output.
+build/
+
 
 ### Swift ###
 # Xcode
@@ -1109,3 +1123,5 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/python,rust,go,java,node,visualstudio,pycharm+all,intellij+all,webstorm+all,c++,c,swift
+/.DS_Store
+/andrew/.DS_Store
