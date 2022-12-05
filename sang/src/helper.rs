@@ -24,8 +24,6 @@ pub async fn get_data(day: i32) -> String {
         .unwrap()
         .text()
         .await
-        .unwrap()
-        .trim()
-        .to_string();
+        .unwrap();
     result
 }
