@@ -13,16 +13,15 @@ pub fn pairs_part_one() {
             pairs
                 .split(",")
                 .map(|pair| {
-                    pair
-                        .split("-")
-                        .map(|x| x.parse::<i32>().unwrap())
-                        .collect::<Vec<_>>()
+                    pair.split("-").map(|v| v.parse::<u32>().unwrap()).collect::<Vec<_>>()
                 })
                 .flatten()
-                .map(|p| p[0])
                 .collect::<Vec<_>>()
         })
-        .collect::<Vec<_>>();
+        .filter(|u|{
+            (u[0] <= u[2] && u[1] >= u[3]) || (u[2] <= u[0] && u[3] >= u[1])
+        })
+        .count();
 
     println!("{:?}", list);
 
