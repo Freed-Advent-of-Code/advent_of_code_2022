@@ -8,6 +8,11 @@ pub async fn solve() {
 
     let part1 = get_part_1(&mut stacks, &instructions);
     println!("part 1: {}", part1);
+
+    let (mut stacks, instructions) = process_input(stack_input, instructions_input);
+
+    let part2 = get_part_2(&mut stacks, &instructions);
+    println!("part 2: {}", part2);
 }
 
 struct Instruction {
@@ -72,6 +77,30 @@ fn get_part_1(stacks: &mut Vec<Vec<char>>, instructions: &Vec<Instruction>) -> S
                     stacks[to_stack - 1].push(item);
                 }
             }
+        }
+    }
+
+    stacks
+        .iter()
+        .filter(|stack| stack.len() > 0)
+        .map(|stack| stack.last().unwrap())
+        .collect()
+}
+
+fn get_part_2(stacks: &mut Vec<Vec<char>>, instructions: &Vec<Instruction>) -> String {
+    for instruction in instructions {
+        let source = &mut stacks[instruction.from_stack - 1];
+        let number = instruction.number;
+        let mut removed = Vec::new();
+
+        for _ in 0..number {
+            removed.push(source.pop().unwrap());
+        }
+
+        let destination = &mut stacks[instruction.to_stack - 1];
+
+        for _ in 0..number {
+            destination.push(removed.pop().unwrap());
         }
     }
 
