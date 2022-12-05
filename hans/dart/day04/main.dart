@@ -1,11 +1,24 @@
 import '../_lib/measure_time.dart';
 import '../_lib/read_file.dart';
+import 'section.dart';
 
 void main() {
   final input = readFile('input');
-  print(measureTime(() => resolve(input)));
+  print(measureTime(() => resolvePuzzle1(input)));
 }
 
-int resolve(String input) {
-  return input.split('\n').fold( 0, (count, pair) => count + ((List<String> pair) => (int.parse(pair[0].split('-')[0]) <= int.parse(pair[1].split('-')[0]) && int.parse(pair[0].split('-')[1]) >= int.parse(pair[1].split('-')[1])) || (int.parse(pair[1].split('-')[0]) <= int.parse(pair[0].split('-')[0]) && int.parse(pair[1].split('-')[1]) >= int.parse(pair[0].split('-')[1])) ? 1 : 0)(pair.split(',')));
+int resolvePuzzle1(String input) {
+  int duplicatedCount = 0;
+  final sectionPairs = input.split('\n').map(parseToSectionPair);
+  sectionPairs.forEach((pair) {
+    if (pair[0].containsSection(pair[1]) || pair[1].containsSection(pair[0])) {
+      duplicatedCount += 1;
+    }
+  });
+
+  return duplicatedCount;
+}
+
+List<Section> parseToSectionPair(String raw) {
+  return raw.split(',').map(Section.fromString).toList();
 }
