@@ -1,7 +1,7 @@
 from typing import TextIO
 
 
-def generate_number_of_fully_contain_pair_part1(text: TextIO) -> list[str]:
+def generate_number_of_fully_contain_pair_part1(text: TextIO) -> int:
     answer = 0
     for line in text.read().split('\n'):
         if line:
@@ -11,7 +11,7 @@ def generate_number_of_fully_contain_pair_part1(text: TextIO) -> list[str]:
 
     return answer
 
-def generate_number_of_fully_contain_pair_part2(text: TextIO) -> list[str]:
+def generate_number_of_fully_contain_pair_part2(text: TextIO) -> int:
     answer = 0
     for line in text.read().split('\n'):
         if line:
