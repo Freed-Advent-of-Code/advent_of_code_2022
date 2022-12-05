@@ -6,12 +6,12 @@ pub async fn solve() {
 
     let (mut stacks, instructions) = process_input(stack_input, instructions_input);
 
-    let part1 = get_part_1(&mut stacks, &instructions);
+    let part1 = helper::time_function(|| get_part_1(&mut stacks, &instructions));
     println!("part 1: {}", part1);
 
     let (mut stacks, instructions) = process_input(stack_input, instructions_input);
 
-    let part2 = get_part_2(&mut stacks, &instructions);
+    let part2 = helper::time_function(|| get_part_2(&mut stacks, &instructions));
     println!("part 2: {}", part2);
 }
 
