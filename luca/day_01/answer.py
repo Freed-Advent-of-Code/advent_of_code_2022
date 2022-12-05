@@ -16,7 +16,7 @@ def generate_elves_total_calories(text: TextIO) -> list[int]:
 
 
 if __name__ == '__main__':
-    with open('luca/day_one/input.txt') as f:
+    with open('luca/day_01/input.txt') as f:
         print(f'part1: {generate_elves_total_calories(f)[0]}')
         f.seek(0)
         print(f'part2: {sum(generate_elves_total_calories(f)[:3])}')
