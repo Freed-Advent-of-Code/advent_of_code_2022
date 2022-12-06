@@ -17,7 +17,9 @@ class Stack<T> {
 
   int get size => this._storage.length;
 
-  T get top => this._storage[this.size - 1];
+  bool get isEmpty => this.size == 0;
+
+  T? get top => this.isEmpty ? null : this._storage[this.size - 1];
 
   @override
   String toString() {
