@@ -11,8 +11,8 @@ class Stack<T> {
     this._storage.add(value);
   }
 
-  T pop() {
-    return this._storage.removeLast();
+  T? pop() {
+    return this.isEmpty ? null : this._storage.removeLast();
   }
 
   int get size => this._storage.length;
