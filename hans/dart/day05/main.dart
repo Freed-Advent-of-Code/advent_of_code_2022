@@ -1,18 +1,32 @@
 import '../_lib/measure_time.dart';
 import '../_lib/read_file.dart';
 import '../_lib/stack.dart';
+import 'models.dart';
 
 void main() {
   final input = readFile('input');
-  print(measureTime(() => resolve(input)));
+  print(measureTime(() => resolvePuzzle1(input)));
+  print(measureTime(() => resolvePuzzle2(input)));
 }
 
-String resolve(String input) {
+String resolvePuzzle1(String input) {
   final splited = input.split('\n\n');
   final stackList = parseToStackList(splited[0]);
-  final procedures = splited[1].split('\n');
+  final procedures = splited[1].split('\n').map(Procedure.fromString);
   procedures.forEach((procedure) => performProcedure(stackList, procedure));
-  print(stackList);
+
+  return stackList
+      .where((stack) => !stack.isEmpty)
+      .map((stack) => stack.top)
+      .join('');
+}
+
+String resolvePuzzle2(String input) {
+  final splited = input.split('\n\n');
+  final stackList = parseToStackList(splited[0]);
+  final procedures = splited[1].split('\n').map(Procedure.fromString);
+  procedures.forEach(
+      (procedure) => performProcedureWithBulkMove(stackList, procedure));
 
   return stackList
       .where((stack) => !stack.isEmpty)
@@ -52,23 +66,35 @@ List<Stack<String>> createStackListFromIds(String ids) {
   return stackList;
 }
 
-void performProcedure(List<Stack<String>> stackList, String rawProcedure) {
-  final procedureRegExp = RegExp(r'(?<count>\d+)[^\d]+(?<from>\d+)[^\d]+(?<to>\d+)');
-  final match = procedureRegExp.firstMatch(rawProcedure);
-  if (match == null) {
-    return;
-  }
-
-  final count = int.parse(match.namedGroup('count')!);
-  final from = int.parse(match.namedGroup('from')!);
-  final to = int.parse(match.namedGroup('to')!);
-
-  for (int _ = 0; _ < count; _++) {
-    final crateToMove = stackList[from].pop();
+void performProcedure(List<Stack<String>> stackList, Procedure procedure) {
+  for (int _ = 0; _ < procedure.count; _++) {
+    final crateToMove = stackList[procedure.from].pop();
     if (crateToMove == null) {
       continue;
     }
 
-    stackList[to].push(crateToMove);
+    stackList[procedure.to].push(crateToMove);
+  }
+}
+
+void performProcedureWithBulkMove(
+    List<Stack<String>> stackList, Procedure procedure) {
+  final tmpStack = Stack<String>();
+  for (int _ = 0; _ < procedure.count; _++) {
+    final crateToMove = stackList[procedure.from].pop();
+    if (crateToMove == null) {
+      continue;
+    }
+
+    tmpStack.push(crateToMove);
+  }
+
+  while (!tmpStack.isEmpty) {
+    final crateToMove = tmpStack.pop();
+    if (crateToMove == null) {
+      continue;
+    }
+
+    stackList[procedure.to].push(crateToMove);
   }
 }
