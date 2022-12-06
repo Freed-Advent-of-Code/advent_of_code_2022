@@ -1,3 +1,5 @@
+use std::time::SystemTime;
+
 pub async fn get_input(day: i32) -> String {
     let file_name = &format!("input/day{}.txt", day);
 
@@ -25,5 +27,14 @@ pub async fn get_data(day: i32) -> String {
         .text()
         .await
         .unwrap();
+    result
+}
+
+pub fn time_function<F: FnMut() -> T, T>(mut function: F) -> T {
+    let start = SystemTime::now();
+    let result = function();
+    let end = SystemTime::now();
+    let duration = end.duration_since(start).unwrap();
+    println!("It took {} ms.", duration.as_micros());
     result
 }
