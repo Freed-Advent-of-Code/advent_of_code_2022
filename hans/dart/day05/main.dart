@@ -5,15 +5,28 @@ import 'models.dart';
 
 void main() {
   final input = readFile('input');
-  print(measureTime(() => resolve(input)));
+  print(measureTime(() => resolvePuzzle1(input)));
+  print(measureTime(() => resolvePuzzle2(input)));
 }
 
-String resolve(String input) {
+String resolvePuzzle1(String input) {
   final splited = input.split('\n\n');
   final stackList = parseToStackList(splited[0]);
   final procedures = splited[1].split('\n').map(Procedure.fromString);
   procedures.forEach((procedure) => performProcedure(stackList, procedure));
-  print(stackList);
+
+  return stackList
+      .where((stack) => !stack.isEmpty)
+      .map((stack) => stack.top)
+      .join('');
+}
+
+String resolvePuzzle2(String input) {
+  final splited = input.split('\n\n');
+  final stackList = parseToStackList(splited[0]);
+  final procedures = splited[1].split('\n').map(Procedure.fromString);
+  procedures.forEach(
+      (procedure) => performProcedureWithBulkMove(stackList, procedure));
 
   return stackList
       .where((stack) => !stack.isEmpty)
@@ -56,6 +69,28 @@ List<Stack<String>> createStackListFromIds(String ids) {
 void performProcedure(List<Stack<String>> stackList, Procedure procedure) {
   for (int _ = 0; _ < procedure.count; _++) {
     final crateToMove = stackList[procedure.from].pop();
+    if (crateToMove == null) {
+      continue;
+    }
+
+    stackList[procedure.to].push(crateToMove);
+  }
+}
+
+void performProcedureWithBulkMove(
+    List<Stack<String>> stackList, Procedure procedure) {
+  final tmpStack = Stack<String>();
+  for (int _ = 0; _ < procedure.count; _++) {
+    final crateToMove = stackList[procedure.from].pop();
+    if (crateToMove == null) {
+      continue;
+    }
+
+    tmpStack.push(crateToMove);
+  }
+
+  while (!tmpStack.isEmpty) {
+    final crateToMove = tmpStack.pop();
     if (crateToMove == null) {
       continue;
     }
