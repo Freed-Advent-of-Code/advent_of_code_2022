@@ -35,6 +35,6 @@ pub fn time_function<F: FnMut() -> T, T>(mut function: F) -> T {
     let result = function();
     let end = SystemTime::now();
     let duration = end.duration_since(start).unwrap();
-    println!("It took {} ms.", duration.as_micros());
+    println!("It took {} microseconds.", duration.as_micros());
     result
 }
