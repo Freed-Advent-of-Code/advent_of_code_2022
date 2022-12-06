@@ -1,6 +1,8 @@
 class Stack<T> {
   List<T> _storage = [];
 
+  Stack() {}
+
   Stack.fromList(List<T> list) {
     this._storage = list;
   }
