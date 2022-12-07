@@ -29,6 +29,7 @@ int resolve(String input, int targetCount) {
     queue.add(codeUnit);
 
     if (queue.length == targetCount) {
+
       count = i + 1;
       break;
     }
