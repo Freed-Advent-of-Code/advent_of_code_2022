@@ -11,10 +11,11 @@ class Memo {
 
 void main() {
   final input = readFile('input');
-  print(measureTime(() => resolvePuzzle1(input)));
+  print(measureTime(() => resolve(input, 4)));
+  print(measureTime(() => resolve(input, 14)));
 }
 
-int resolvePuzzle1(String input) {
+int resolve(String input, int targetCount) {
   final queue = Queue<int>();
   int count = 0;
 
@@ -27,7 +28,8 @@ int resolvePuzzle1(String input) {
 
     queue.add(codeUnit);
 
-    if (queue.length == 4) {
+    if (queue.length == targetCount) {
+
       count = i + 1;
       break;
     }
