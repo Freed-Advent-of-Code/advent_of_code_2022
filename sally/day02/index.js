@@ -4,7 +4,7 @@ const score = {
   lose: 0,
 };
 const inputs = require("fs")
-  .readFileSync("sally/day02/inputs.txt")
+  .readFileSync("sally/day02/input.txt")
   .toString()
   .split("\n");
 const subAscii = (char1, char2) => char1.charCodeAt(0) - char2.charCodeAt(0);
