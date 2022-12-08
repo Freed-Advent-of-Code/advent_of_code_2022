@@ -17,7 +17,49 @@ int solutionPuzzle1(String input) {
   return getTotalDirectorySize(root, (size) => size <= 100000);
 }
 
-void createFileTree(Directory root, List<String> lines) {}
+void createFileTree(Directory root, List<String> lines) {
+  Directory currentDir = root;
+  int index = 0;
+  while (index < lines.length) {
+    String line = lines[index];
+
+    if (line.startsWith('\$ cd')) {
+      final dirName = line.substring(5);
+      if (dirName == '..') {
+        final parent = currentDir.parent;
+        currentDir = parent == null ? root : parent;
+      } else {
+        final dir = currentDir.children.firstWhere(
+            (childNode) => childNode.name == dirName && childNode is Directory);
+        currentDir = dir as Directory;
+      }
+
+      index += 1;
+    }
+
+    if (line.startsWith('\$ ls')) {
+      int outputIndex = index + 1;
+      while (
+          outputIndex < lines.length && !lines[outputIndex].startsWith('\$')) {
+        line = lines[outputIndex];
+        if (line.startsWith('dir')) {
+          final dirName = line.substring(4);
+          Directory(dirName).setParent(currentDir);
+        } else {
+          final splited = line.split(' ');
+          final size = int.parse(splited[0]);
+          final fileName = splited[1];
+          File(fileName, size).setParent(currentDir);
+        }
+
+        outputIndex += 1;
+      }
+
+      index = outputIndex;
+      continue;
+    }
+  }
+}
 
 int getTotalDirectorySize(Directory directory, bool Function(int) filter) {
   int total = filter(directory.size) ? directory.size : 0;
