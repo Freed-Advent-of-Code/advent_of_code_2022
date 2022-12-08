@@ -65,7 +65,6 @@ def build_directory_tree():
 
 def part_one():
     root = build_directory_tree()
-    print(directories)
     return sum(x for x in directories if x <= 100000)
 
 print(part_one())
@@ -75,7 +74,7 @@ def part_two():
     if directories:
         directories.clear()
     root = build_directory_tree()
-    total = sorted(x for x in directories)[-1]
-    return sorted(x for x in directories if x > total - 40000000)[0]
+    total = max(x for x in directories)
+    return min(x for x in directories if x > total - 40000000)
 
 print(part_two())
