@@ -1,32 +1,47 @@
+import 'dart:io';
+
 abstract class Node {
   late String name;
   int get size;
-  late Node? parent;
+  late Directory? parent;
+
+  Node setParent(Directory parent);
+  void printFileTree({int depth = 0}) {
+    for (var _ = 0; _ < depth; _++) {
+      stdout.write('  ');
+    }
+  }
 }
 
-class File implements Node {
+class File extends Node {
   late int _size;
-
-  @override
-  late String name;
 
   @override
   int get size {
     return _size;
   }
 
-  @override
-  late Node? parent;
-
-  File(Node parent, String name, int size) {
-    this.parent = parent;
+  File(String name, int size) {
     this.name = name;
     this._size = size;
   }
+
+  @override
+  File setParent(Directory parent) {
+    this.parent = parent;
+    this.parent!.children.add(this);
+    return this;
+  }
+
+  @override
+  void printFileTree({int depth = 0}) {
+    super.printFileTree(depth: depth);
+    print('- ${this.name} (${this.size})');
+  }
 }
 
-class Directory implements Node {
-  late List<Node> children;
+class Directory extends Node {
+  List<Node> children = [];
 
   @override
   late String name;
@@ -38,8 +53,21 @@ class Directory implements Node {
         .fold(0, (totalSize, childNode) => totalSize + childNode.size);
   }
 
-  @override
-  late Node? parent;
+  Directory(this.name);
 
-  Directory(this.parent, this.name);
+  @override
+  Directory setParent(Directory parent) {
+    this.parent = parent;
+    this.parent!.children.add(this);
+    return this;
+  }
+
+  @override
+  void printFileTree({int depth = 0}) {
+    super.printFileTree(depth: depth);
+    print('- [${this.name}] (${this.size})');
+    this
+        .children
+        .forEach((childNode) => childNode.printFileTree(depth: depth + 1));
+  }
 }
