@@ -73,16 +73,16 @@ fn get_part_2(grid: &Vec<Vec<i32>>) -> usize {
             let (mut top, mut left, mut bottom, mut right) = (0, 0, 0, 0);
             
             let mut vision = row - 1;
-            let mut isEnd: bool = false;
+            let mut is_end: bool = false;
             while grid[vision][col] < grid[row][col] {
                 top += 1;
                 if vision == 0 {
-                    isEnd = true;
+                    is_end = true;
                     break;
                 }
                 vision -= 1;
             }
-            if !isEnd {
+            if !is_end {
                 top += 1;
             }
 
@@ -95,17 +95,17 @@ fn get_part_2(grid: &Vec<Vec<i32>>) -> usize {
                 bottom += 1;
             }
 
-            isEnd = false;
+            is_end = false;
             vision = col - 1;
             while grid[row][vision] < grid[row][col] {
                 left += 1;
                 if vision == 0 {
-                    isEnd = true;
+                    is_end = true;
                     break;
                 }
                 vision -= 1;
             }
-            if !isEnd {
+            if !is_end {
                 left += 1;
             }
 
