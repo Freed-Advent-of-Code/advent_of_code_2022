@@ -8,6 +8,8 @@ import java.util.Map;
 
 public class Day7 {
     private static final long LIMIT = 100_000;
+    private static final long DIRECTORY_SPACE = 40_000_000;
+
     public static void main(String[] args) {
         try {
             List<String> lines = Files.readAllLines(Paths.get("day7.txt"));
@@ -36,6 +38,9 @@ public class Day7 {
 
             long part1 = part1(root);
             System.out.println("part1 = " + part1);
+
+            long part2 = part2(root);
+            System.out.println("part2 = " + part2);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -44,7 +49,6 @@ public class Day7 {
     public static long part1(FileNode root) {
         List<FileNode> result = new ArrayList<>();
         dfs(root, result);
-        System.out.println("result = " + result);
         return result
                 .stream()
                 .map(file -> file.size)
@@ -66,10 +70,29 @@ public class Day7 {
 
         if (curr.size <= LIMIT) {
             smallDirectories.add(curr);
-            System.out.println("curr = " + curr);
         }
 
         return curr.size;
+    }
+
+    public static long part2(FileNode root) {
+        long minFreeSpace = root.size - DIRECTORY_SPACE;
+        return dfs2(root, minFreeSpace);
+    }
+
+    private static long dfs2(FileNode curr, long minFreeSpace) {
+        if (!curr.isFolder())  {
+            return Long.MAX_VALUE;
+        }
+
+        long minimumToDelete = curr.size >= minFreeSpace ? curr.size : Long.MAX_VALUE;
+
+        for (FileNode child : curr.children.values()) {
+            minimumToDelete = Math.min(minimumToDelete, dfs2(child, minFreeSpace));
+        }
+
+
+        return minimumToDelete;
     }
 
     static class FileNode {
