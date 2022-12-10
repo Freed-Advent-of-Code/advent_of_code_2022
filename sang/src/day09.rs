@@ -5,6 +5,9 @@ pub async fn solve() {
     let input = helper::get_input(9).await;
     let part1 = get_part_1(&input);
     println!("part 1: {}", part1);
+
+    let part2 = get_part_2(&input);
+    println!("part 2: {}", part2);
 }
 
 fn get_part_1(input: &String) -> usize {
@@ -18,6 +21,42 @@ fn get_part_1(input: &String) -> usize {
             head.move_dir(command[0]);
             tail.follow(&head);
             visited.insert(tail.get_position());
+        }
+    });
+    visited.len()
+}
+
+fn get_part_2(input: &String) -> usize {
+    let mut head = Point::new();
+
+    let mut tail1 = Point::new();
+    let mut tail2 = Point::new();
+    let mut tail3 = Point::new();
+    let mut tail4 = Point::new();
+    let mut tail5 = Point::new();
+    let mut tail6 = Point::new();
+    let mut tail7 = Point::new();
+    let mut tail8 = Point::new();
+    let mut tail9 = Point::new();
+    let mut visited: HashSet<String> = HashSet::new();
+    visited.insert("0,0".to_string());
+
+    input.lines().for_each(|line| {
+        let command: Vec<&str> = line.split(" ").collect();
+        for _ in 0..command[1].parse::<usize>().unwrap() {
+            head.move_dir(command[0]);
+
+            tail1.follow(&head);
+            tail2.follow(&tail1);
+            tail3.follow(&tail2);
+            tail4.follow(&tail3);
+            tail5.follow(&tail4);
+            tail6.follow(&tail5);
+            tail7.follow(&tail6);
+            tail8.follow(&tail7);
+            tail9.follow(&tail8);
+
+            visited.insert(tail9.get_position());
         }
     });
     visited.len()
@@ -84,6 +123,15 @@ impl Tail for Point {
 
     fn get_position(&self) -> String {
         format!("{},{}", self.x, self.y)
+    }
+}
+
+impl Clone for Point {
+    fn clone(&self) -> Self {
+        Self {
+            x: self.x.clone(),
+            y: self.y.clone(),
+        }
     }
 }
 
