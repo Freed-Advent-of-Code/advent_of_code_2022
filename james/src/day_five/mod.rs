@@ -32,15 +32,11 @@ pub fn supply_stacks_pt1 () {
             let move_size = instruction_split.clone().nth(1).unwrap().parse::<usize>().unwrap();
             let from_container_index = instruction_split.clone().nth(3).unwrap().parse::<usize>().unwrap();
             let to_container_index = instruction_split.clone().nth(5).unwrap().parse::<usize>().unwrap();
-            // let mut from_container = &mut stack_list[&from_container_index - 1];
-            let mut to_container = &mut stack_list[&to_container_index- 1];
-            // let mut new_stack =  &mut from_container
-            //     .clone()
-            //     .drain(move_size..)
-            //     .collect::<Vec<_>>();
-            println!("{:?}", to_container);
+            for _ in 0..move_size {
+                let popped_value = stack_list[from_container_index - 1].pop().unwrap();
+                stack_list[to_container_index - 1].push(popped_value);
+            }
         })
         .collect::<Vec<_>>();
     println!("{:?}", stack_list);
-    println!("{:?}", instructions);
 }
