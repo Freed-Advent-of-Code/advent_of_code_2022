@@ -55,18 +55,21 @@ def part_one():
     x, y = sorted([m.inspected for m in monkeys])[-2:]
     return x * y
 
-# print(part_one())
+print(part_one())
 
 
 def part_two():
     with open('input.txt', 'r') as f:
         data = f.read()
     monkeys = find_monkeys(data)
+    lcm = 1
+    for monkey in monkeys:
+        lcm = lcm * monkey.divisible_test
     for _ in range(10000):
         for monkey in monkeys:
             while monkey.items:
                 item = monkey.items.pop(0)
-                op_v = monkey.operation(item)
+                op_v = monkey.operation(item) % lcm
                 monkeys[monkey.inspect(op_v)].items.append(op_v)
     x, y = sorted([m.inspected for m in monkeys])[-2:]
     return x * y
