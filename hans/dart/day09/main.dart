@@ -1,5 +1,6 @@
 import '../_lib/measure_time.dart';
 import '../_lib/read_file.dart';
+import 'models.dart';
 
 void main() {
   final input = readFile('input');
@@ -7,7 +8,12 @@ void main() {
 }
 
 int solution1(String input) {
-  Set<String> visited = {};
+  final head = Position(0, 0);
+  final tail = Position(0, 0);
+  Set<String> tailVisited = {tail.toString()};
+  final motions = input.split('\n').map(Motion.fromString);
 
-  return visited.length;
+  motions.forEach((motion) {});
+
+  return tailVisited.length;
 }
