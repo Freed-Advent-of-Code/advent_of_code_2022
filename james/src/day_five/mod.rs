@@ -32,13 +32,33 @@ pub fn supply_stacks_pt1 () {
             let move_size = instruction_split.clone().nth(1).unwrap().parse::<usize>().unwrap();
             let from_container_index = instruction_split.clone().nth(3).unwrap().parse::<usize>().unwrap();
             let to_container_index = instruction_split.clone().nth(5).unwrap().parse::<usize>().unwrap();
-            // let mut from_container = &mut stack_list[&from_container_index - 1];
-            let mut to_container = &mut stack_list[&to_container_index- 1];
-            // let mut new_stack =  &mut from_container
-            //     .clone()
-            //     .drain(move_size..)
-            //     .collect::<Vec<_>>();
-            println!("{:?}", to_container);
+            for _ in 0..move_size {
+                let popped_value = stack_list[from_container_index - 1].pop().unwrap();
+                stack_list[to_container_index - 1].push(popped_value);
+            }
+        })
+        .collect::<Vec<_>>();
+    println!("{:?}", stack_list);
+}
+
+pub fn supply_stacks_pt2 () {
+    let mut stack_list = get_stacks();
+    let file = fs::read_to_string("./src/day_five/input.txt").unwrap();
+    let instructions = file
+        .split("\n\n")
+        .nth(1)
+        .unwrap()
+        .lines()
+        .map(|instruction| {
+            let mut instruction_split = instruction.split_whitespace();
+            let move_size = instruction_split.clone().nth(1).unwrap().parse::<usize>().unwrap();
+            let from_container_index = instruction_split.clone().nth(3).unwrap().parse::<usize>().unwrap();
+            let to_container_index = instruction_split.clone().nth(5).unwrap().parse::<usize>().unwrap();
+            let from_container_len = stack_list[from_container_index - 1].len();
+            let mut drained = stack_list[from_container_index - 1]
+                .drain((from_container_len - move_size)..)
+                .collect::<Vec<_>>();
+            stack_list[to_container_index - 1].append(&mut drained);
         })
         .collect::<Vec<_>>();
     println!("{:?}", stack_list);
