@@ -4,11 +4,28 @@ class Position {
 
   Position(this.x, this.y);
 
-  bool isTouchingWith(Position otherPos) {
-    int distanceX = (this.x - otherPos.x).abs();
-    int distanceY = (this.y - otherPos.y).abs();
+  Position move(Position vector) {
+    return Position(this.x + vector.x, this.y + vector.y);
+  }
 
-    return distanceX <= 1 && distanceY <= 1;
+  Position get reverse {
+    return Position(this.x * -1, this.y * -1);
+  }
+
+  int _getDistanceX(Position otherPos) {
+    return (this.x - otherPos.x).abs();
+  }
+
+  int _getDistanceY(Position otherPos) {
+    return (this.y - otherPos.y).abs();
+  }
+
+  int manhattanDistanceWith(Position otherPos) {
+    return _getDistanceX(otherPos) + _getDistanceY(otherPos);
+  }
+
+  bool isTouchingWith(Position otherPos) {
+    return _getDistanceX(otherPos) <= 1 && _getDistanceY(otherPos) <= 1;
   }
 
   @override
@@ -29,6 +46,28 @@ class Motion {
     final moveAmount = int.parse(splited[1]);
 
     return Motion(direction, moveAmount);
+  }
+
+  Position get unitVector {
+    final unitVector = Position(0, 0);
+
+    if (this.direction == Direction.Up) {
+      unitVector.y += 1;
+    }
+
+    if (this.direction == Direction.Down) {
+      unitVector.y -= 1;
+    }
+
+    if (this.direction == Direction.Right) {
+      unitVector.x += 1;
+    }
+
+    if (this.direction == Direction.Left) {
+      unitVector.x -= 1;
+    }
+
+    return unitVector;
   }
 }
 

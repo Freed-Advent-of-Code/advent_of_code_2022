@@ -8,12 +8,27 @@ void main() {
 }
 
 int solution1(String input) {
-  final head = Position(0, 0);
-  final tail = Position(0, 0);
+  var head = Position(0, 0);
+  var tail = Position(0, 0);
   Set<String> tailVisited = {tail.toString()};
   final motions = input.split('\n').map(Motion.fromString);
 
-  motions.forEach((motion) {});
+  motions.forEach((motion) {
+    for (int _ = 0; _ < motion.moveAmount; _++) {
+      head = head.move(motion.unitVector);
+      if (!head.isTouchingWith(tail)) {
+        if (head.manhattanDistanceWith(tail) > 2) {
+          tail = head.move(motion.unitVector.reverse);
+        } else {
+          tail = tail.move(motion.unitVector);
+        }
+
+        tailVisited.add(tail.toString());
+      }
+    }
+
+    print('head: ${head}, tail: ${tail}');
+  });
 
   return tailVisited.length;
 }
