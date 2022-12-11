@@ -1,11 +1,12 @@
 
-mod day_five;
+mod day_six;
 
-// use day_five::supply_stacks_pt1;
-use day_five::supply_stacks_pt2;
+use day_six::turning_trouble_pt1;
 
 fn main() {
-    supply_stacks_pt2();
+
+    let answer = turning_trouble_pt1();
+    println!("{}", answer);
 
 }
 
