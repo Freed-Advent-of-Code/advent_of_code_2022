@@ -8,24 +8,32 @@ class Position {
     return Position(this.x + vector.x, this.y + vector.y);
   }
 
+  Position followTo(Position target, Motion motion) {
+    if (_getManhattanDistanceWith(target) > 2) {
+      return target.move(motion.unitVector.reverse);
+    } else {
+      return this.move(motion.unitVector);
+    }
+  }
+
   Position get reverse {
     return Position(this.x * -1, this.y * -1);
   }
 
-  int _getDistanceX(Position otherPos) {
-    return (this.x - otherPos.x).abs();
+  int _getDistanceX(Position target) {
+    return (this.x - target.x).abs();
   }
 
-  int _getDistanceY(Position otherPos) {
-    return (this.y - otherPos.y).abs();
+  int _getDistanceY(Position target) {
+    return (this.y - target.y).abs();
   }
 
-  int manhattanDistanceWith(Position otherPos) {
-    return _getDistanceX(otherPos) + _getDistanceY(otherPos);
+  int _getManhattanDistanceWith(Position target) {
+    return _getDistanceX(target) + _getDistanceY(target);
   }
 
-  bool isTouchingWith(Position otherPos) {
-    return _getDistanceX(otherPos) <= 1 && _getDistanceY(otherPos) <= 1;
+  bool isTouchingWith(Position target) {
+    return _getDistanceX(target) <= 1 && _getDistanceY(target) <= 1;
   }
 
   @override

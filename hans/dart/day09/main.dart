@@ -16,18 +16,11 @@ int solution1(String input) {
   motions.forEach((motion) {
     for (int _ = 0; _ < motion.moveAmount; _++) {
       head = head.move(motion.unitVector);
-      if (!head.isTouchingWith(tail)) {
-        if (head.manhattanDistanceWith(tail) > 2) {
-          tail = head.move(motion.unitVector.reverse);
-        } else {
-          tail = tail.move(motion.unitVector);
-        }
-
+      if (!tail.isTouchingWith(head)) {
+        tail.followTo(head, motion);
         tailVisited.add(tail.toString());
       }
     }
-
-    print('head: ${head}, tail: ${tail}');
   });
 
   return tailVisited.length;
