@@ -5,30 +5,23 @@ import 'models.dart';
 void main() {
   final input = readFile('input');
   print(measureTime(() => solution1(input)));
+  print(measureTime(() => solution2(input)));
 }
 
 int solution1(String input) {
-  var head = Position(0, 0);
-  var tail = Position(0, 0);
-  Set<String> tailVisited = {tail.toString()};
+  final rope = Rope.fromKnotsCount(2);
   final motions = input.split('\n').map(Motion.fromString);
 
-  motions.forEach((motion) {
-    for (int _ = 0; _ < motion.moveAmount; _++) {
-      head = head.move(motion.unitVector);
-      if (!head.isTouchingWith(tail)) {
-        if (head.manhattanDistanceWith(tail) > 2) {
-          tail = head.move(motion.unitVector.reverse);
-        } else {
-          tail = tail.move(motion.unitVector);
-        }
+  motions.forEach(rope.move);
 
-        tailVisited.add(tail.toString());
-      }
-    }
+  return rope.tailVisited.length;
+}
 
-    print('head: ${head}, tail: ${tail}');
-  });
+int solution2(String input) {
+  final rope = Rope.fromKnotsCount(10);
+  final motions = input.split('\n').map(Motion.fromString);
 
-  return tailVisited.length;
+  motions.forEach(rope.move);
+
+  return rope.tailVisited.length;
 }
