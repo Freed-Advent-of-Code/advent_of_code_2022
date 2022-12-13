@@ -5,6 +5,9 @@ pub async fn solve() {
     let input = helper::get_input(12).await;
     let part1 = helper::time_function(|| get_part_1(&input));
     println!("part 1: {}", part1);
+
+    let part2 = helper::time_function(|| get_part_2(&input));
+    println!("part 2: {}", part2);
 }
 
 fn process_input(input: &str) -> Graph {
@@ -30,7 +33,7 @@ fn process_input(input: &str) -> Graph {
     Graph { grid, start, end }
 }
 
-fn bfs(graph: &Graph) -> i32 {
+fn bfs_1(graph: &Graph) -> i32 {
     let mut visited: Vec<Vec<bool>> = vec![vec![false; graph.grid[0].len()]; graph.grid.len()];
     let mut queue: VecDeque<(usize, usize, i32)> = VecDeque::new();
     queue.push_back((graph.start.0, graph.start.1, 0));
@@ -65,7 +68,49 @@ fn bfs(graph: &Graph) -> i32 {
 
 fn get_part_1(input: &str) -> i32 {
     let graph = process_input(&input);
-    bfs(&graph)
+    bfs_1(&graph)
+}
+
+fn bfs_2(graph: &Graph) -> i32 {
+    let grid = &graph.grid;
+    let (max_row, max_col) = (grid.len(), grid[0].len());
+    let mut visited: Vec<Vec<bool>> = vec![vec![false; graph.grid[0].len()]; graph.grid.len()];
+    let mut queue: VecDeque<(usize, usize, i32)> = VecDeque::new();
+    queue.push_back((graph.end.0, graph.end.1, 0));
+
+    while !queue.is_empty() {
+        let (i, j, dist) = queue.pop_front().unwrap();
+        if visited[i][j] {
+            continue;
+        }
+        println!(
+            "visiting ({}, {}) = {} with a dist of {}",
+            i, j, grid[i][j], dist
+        );
+        if grid[i][j] == 0 {
+            return dist;
+        }
+        visited[i][j] = true;
+
+        if i > 0 && grid[i][j] <= grid[i - 1][j] + 1 {
+            queue.push_back((i - 1, j, dist + 1));
+        }
+        if i < max_row - 1 && grid[i][j] <= grid[i + 1][j] + 1 {
+            queue.push_back((i + 1, j, dist + 1));
+        }
+        if j > 0 && grid[i][j] <= grid[i][j - 1] + 1 {
+            queue.push_back((i, j - 1, dist + 1));
+        }
+        if j < max_col - 1 && grid[i][j] <= grid[i][j + 1] + 1 {
+            queue.push_back((i, j + 1, dist + 1));
+        }
+    }
+    0
+}
+
+fn get_part_2(input: &str) -> i32 {
+    let graph = process_input(&input);
+    bfs_2(&graph)
 }
 
 struct Graph {
@@ -82,4 +127,14 @@ fn test_get_part_1() {
     };
 
     assert_eq!(result, 31);
+}
+
+#[test]
+fn test_get_part_2() {
+    let result = match std::fs::read_to_string("input/day12-test.txt") {
+        Ok(content) => get_part_2(&content),
+        Err(_) => panic!("invalid day12-test.txt"),
+    };
+
+    assert_eq!(result, 29);
 }
