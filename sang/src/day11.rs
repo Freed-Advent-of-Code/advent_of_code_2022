@@ -14,6 +14,7 @@ pub async fn solve() {
 
 fn process_input(input: &str) -> Vec<Monkey> {
     let mut monkeys: Vec<Monkey> = vec![];
+    /*
     input.split("\n\n").for_each(|paragraph| {
         let mut iter = paragraph.lines();
         iter.next();
@@ -95,6 +96,7 @@ fn process_input(input: &str) -> Vec<Monkey> {
         };
         monkeys.push(monkey);
     });
+     */
     monkeys
 }
 
