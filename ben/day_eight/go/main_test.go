@@ -19,5 +19,13 @@ func TestPart1(t *testing.T) {
 }
 
 func TestPart2(t *testing.T) {
-
+	f, err := os.Open("test_input.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+	counter := NewTreeCounter(f)
+	got := counter.count()
+	if counter.getHighestScores() != 8 {
+		t.Errorf("got %d wanted %d", got, 8)
+	}
 }
