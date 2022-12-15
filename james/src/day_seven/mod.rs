@@ -1,4 +1,6 @@
 use std::fs;
+use std::rc::Rc;
+use std::collections::HashMap;
 
 struct File {
     name: String,
@@ -7,22 +9,18 @@ struct File {
 
 struct Dir {
     name: String,
-    files: Vec<File>
+    size: usize,
+    parent: Option<Rc<Dir>>,
+    subdir: HashMAp<String, Rc<Dir>>
 }
 
 pub fn no_space_left_on_device_pt1 () {
-
-    let mut current_dir = Dir {
-        name: String::from(""),
-        files: vec![]
-    };
 
     let f = read_input()
         .lines()
         .map(|line| {
             let parsed_line = line.split_whitespace().nth(1);
             println!("{:?}", parsed_line);
-
         })
         .collect::<Vec<_>>();
     println!("{:?}", f);
