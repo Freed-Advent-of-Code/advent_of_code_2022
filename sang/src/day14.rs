@@ -7,8 +7,8 @@ const SAND: i32 = 2;
 pub async fn solve() {
     let input = helper::get_input(14).await;
     let mut grid_data = process_input(&input);
-    let part1 = helper::time_function(|| get_part_1(&mut grid_data));
-    println!("part 1: {}", part1);
+    // let part1 = helper::time_function(|| get_part_1(&mut grid_data));
+    // println!("part 1: {}", part1);
 
     let part2 = helper::time_function(|| get_part_2(&mut grid_data));
     println!("part 2: {}", part2);
@@ -137,7 +137,7 @@ fn get_part_2(grid_data: &mut GridData) -> i32 {
                 sand_count += 1;
                 break;
             }
-            if row == grid_data.deepest + 2 {
+            if row == grid_data.deepest + 1 {
                 sand_count += 1;
                 grid[row][col] = SAND;
                 break;
