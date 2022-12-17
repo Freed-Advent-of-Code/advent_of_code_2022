@@ -6,7 +6,7 @@ class Ref<T> {
 
 class Valve {
   static final RegExp _regExp =
-      RegExp(r'Valve (?<id>.{2}).+rate=(?<rate>\d).+valves? (?<tunnels>.+)');
+      RegExp(r'Valve (?<id>.{2}).+rate=(?<rate>\d+).+valves? (?<tunnels>.+)');
 
   final String id;
   final int rate;
