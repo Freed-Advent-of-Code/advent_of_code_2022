@@ -33,3 +33,40 @@ class Valve {
     return '\n- id: ${id}\n- rate: ${rate}\n- tunnels: ${tunnels}\n';
   }
 }
+
+class DfsDto {
+  final Map<String, Valve> valveMap;
+  final Map<String, Map<String, int>> minDistanceGrid;
+  final Set<String> targetValves;
+  final Valve currentValve;
+  final int currentMin;
+  final int maxMin;
+  final int currentRelease;
+  final int currentReleaseIncrease;
+
+  DfsDto(
+      this.valveMap, this.minDistanceGrid, this.targetValves, this.currentValve,
+      {this.currentMin: 1,
+      this.maxMin: 30,
+      this.currentRelease: 0,
+      this.currentReleaseIncrease: 0});
+
+  DfsDto update(
+      {Valve? currentValve: null,
+      int? currentMin: null,
+      int? currentRelease: null,
+      int? currentReleaseIncrease: null}) {
+    final newCurrentValve = currentValve ?? this.currentValve;
+    final newCurrentMin = currentMin ?? this.currentMin;
+    final newCurrentRelease = currentRelease ?? this.currentRelease;
+    final newCurrentReleaseIncrease =
+        currentReleaseIncrease ?? this.currentReleaseIncrease;
+
+    return DfsDto(
+        this.valveMap, this.minDistanceGrid, this.targetValves, newCurrentValve,
+        currentMin: newCurrentMin,
+        maxMin: this.maxMin,
+        currentRelease: newCurrentRelease,
+        currentReleaseIncrease: newCurrentReleaseIncrease);
+  }
+}
