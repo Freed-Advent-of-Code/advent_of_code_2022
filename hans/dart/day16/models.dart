@@ -53,17 +53,19 @@ class DfsDto {
       this.currentReleaseIncrease: 0});
 
   DfsDto update(
-      {Valve? currentValve: null,
+      {Set<String>? targetValves,
+      Valve? currentValve: null,
       int? currentMin: null,
       int? currentRelease: null,
       int? currentReleaseIncrease: null}) {
+    final newTargetValves = targetValves ?? this.targetValves;
     final newCurrentValve = currentValve ?? this.currentValve;
     final newCurrentMin = currentMin ?? this.currentMin;
     final newCurrentRelease = currentRelease ?? this.currentRelease;
     final newCurrentReleaseIncrease =
         currentReleaseIncrease ?? this.currentReleaseIncrease;
 
-    return DfsDto(this.valveMap, this.minDistanceGrid, this.targetValves,
+    return DfsDto(this.valveMap, this.minDistanceGrid, newTargetValves,
         newCurrentValve, this.resultRef,
         currentMin: newCurrentMin,
         maxMin: this.maxMin,
