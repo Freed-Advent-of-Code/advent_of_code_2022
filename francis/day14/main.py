@@ -7,30 +7,32 @@ def part_one():
         prev = None
         for point in line.split('->'):
             x, y = list(map(int, point.split(',')))
-            if prev is not None:
-                dx = x-prev[0]
-                dy = y-prev[1]
-                for i in range(max(abs(dx), abs(dy)) +1):
-                    xx = prev[0] + i * (1 if dx > 0 else (-1 if dx < 0 else 0))
-                    yy = prev[1] + i * (1 if dy > 0 else (-1 if dy < 0 else 0))
-                    floor.add((xx,yy))
+            if prev:
+                distance_x = abs(x - prev[0])
+                distance_y = abs(y - prev[1])
+                for i in range(max(distance_x, distance_y) + 1):
+                    direction_x = 1 if x > prev[0] else -1 if x < prev[0] else 0
+                    direction_y = 1 if y > prev[1] else -1 if y < prev[1] else 0
+
+                    floor.add((prev[0] + i * direction_x, prev[1] + i * direction_y))
             prev = (x,y)
 
-    max_y = max(r[1] for r in floor) + 2
-    #print(max_y)
-    min_x = min(r[0] for r in floor) - 200
-    max_x = max(r[0] for r in floor) + 200
+    # for infinity floor
+    max_x = max(x[0] for x in floor) + 200
+    max_y = max(x[1] for x in floor) + 2
+    min_x = min(x[0] for x in floor) - 200
     for x in range(min_x, max_x):
         floor.add((x, max_y))
 
-    part_1 = False
-    for i in range(200000):
-        rock = (500,0)
+    start_point = (500,0)
+    i = 0
+    flag = False
+    while i := i + 1:
+        rock = start_point
         while True:
-            if rock[1] + 1 >= max_y and not part_1:
-                part_1 = True
-                print(i)
-                continue
+            if rock[1] + 1 >= max_y and not flag:
+                flag = True
+                print(i-1)
             if (rock[0], rock[1] + 1) not in floor:
                 rock = (rock[0], rock[1] + 1)
             elif (rock[0] - 1,rock[1]+1) not in floor:
@@ -39,8 +41,8 @@ def part_one():
                 rock = (rock[0] + 1, rock[1] + 1)
             else:
                 break
-        if rock == (500,0):
-            print(i + 1)
+        if rock == start_point:
+            print(i)
             break
         floor.add(rock)
 print(part_one())
