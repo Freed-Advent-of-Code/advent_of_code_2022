@@ -1,3 +1,9 @@
+class Ref<T> {
+  T current;
+
+  Ref(this.current);
+}
+
 class Valve {
   static final RegExp _regExp =
       RegExp(r'Valve (?<id>.{2}).+rate=(?<rate>\d).+valves? (?<tunnels>.+)');
