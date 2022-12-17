@@ -1,6 +1,6 @@
 class Valve {
   static final RegExp _regExp =
-      RegExp(r'Valve (?<id>.{2}).+rate=(?<rate>\d).+valves (?<tunnels>.+)');
+      RegExp(r'Valve (?<id>.{2}).+rate=(?<rate>\d).+valves? (?<tunnels>.+)');
 
   final String id;
   final int rate;
@@ -20,5 +20,10 @@ class Valve {
     final tunnels = match.namedGroup('tunnels')!.split(', ');
 
     return Valve(id, rate, tunnels);
+  }
+
+  @override
+  String toString() {
+    return '\n- id: ${id}\n- rate: ${rate}\n- tunnels: ${tunnels}\n';
   }
 }
