@@ -1,5 +1,5 @@
 #[tokio::main]
 async fn main() {
     dotenv::dotenv().ok();
-    sang::day15::solve().await;
+    sang::day20::solve().await;
 }
