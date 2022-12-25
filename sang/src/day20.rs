@@ -4,6 +4,9 @@ pub async fn solve() {
     let input = helper::get_input(20).await;
     let part1 = helper::time_function(|| get_part_1(&input));
     println!("part 1: {}", part1);
+
+    let part2 = helper::time_function(|| get_part_2(&input));
+    println!("part 2: {}", part2);
 }
 
 struct Number {
@@ -39,8 +42,29 @@ fn get_part_1(input: &str) -> i64 {
         + get_nth_after_zero(&array, 3000)
 }
 
+fn get_part_2(input: &str) -> i64 {
+    let decryption_key = 811589153;
+    let mut array: Vec<Number> = input
+        .lines()
+        .enumerate()
+        .map(|(index, line)| Number {
+            order: index,
+            value: line.parse::<i64>().unwrap() * decryption_key,
+        })
+        .collect();
+
+    for _ in 0..10 {
+        for i in 0..array.len() {
+            move_number(&mut array, i);
+        }
+    }
+
+    get_nth_after_zero(&array, 1000)
+        + get_nth_after_zero(&array, 2000)
+        + get_nth_after_zero(&array, 3000)
+}
+
 fn move_number(array: &mut Vec<Number>, order: usize) {
-    println!("index: {}", order);
     let position = array.iter().position(|num| num.order == order).unwrap();
     let number = array[position].clone();
     if number.value == 0 {
@@ -68,10 +92,8 @@ fn move_number(array: &mut Vec<Number>, order: usize) {
 
 fn get_nth_after_zero(array: &Vec<Number>, n: usize) -> i64 {
     let zero_index = array.iter().position(|n| n.value == 0).unwrap();
-
     let nth_position = (zero_index + n) % array.len();
 
-    println!("{}th: {}", n, array[nth_position].value);
     array[nth_position].value
 }
 
